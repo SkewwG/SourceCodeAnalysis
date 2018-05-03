@@ -167,7 +167,7 @@ def wsgi_app(self, environ, start_response):
         ctx.auto_pop(error)
 ```
 
-`full_dsipatch_request` 的代码如下：
+wsgi_app的核心方法`full_dsipatch_request` 的代码如下：
 ```
 def full_dispatch_request(self):
     self.try_trigger_before_first_request_functions()
@@ -421,6 +421,12 @@ def match(self, path):
 ```
 **match的主要功能是Map 保存了 Rule 列表，match 的时候会依次调用其中的 rule.match 方法，如果匹配就找到了**
 
+---
+
+**通过Map类的分析，我们了解了endpoint如何与view func建立联系，接下去分析Rule类，了解url和endpoint 的联系。**
+
+---
+
 ### 2.4. Class Rule
 **主要功能就是 url 到 endpoint 的转换：通过 url 找到处理该 url 的 endpoint**
 
@@ -504,7 +510,7 @@ A sequence of http methods this rule applies to.  If not specified, all methods 
 
 **问：什么是上下文？**
 
-**答：**每一段程序都有很多外部变量。只有像Add这种简单的函数才是没有外部变量的。一旦你的一段程序有了外部变量，这段程序就不完整，不能独立运行。你为了使他们运行，就要给所有的外部变量一个一个写一些值进去。这些值的集合就叫上下文。
+**答**：每一段程序都有很多外部变量。只有像Add这种简单的函数才是没有外部变量的。一旦你的一段程序有了外部变量，这段程序就不完整，不能独立运行。你为了使他们运行，就要给所有的外部变量一个一个写一些值进去。这些值的集合就叫上下文。
 
 来源：知乎 https://www.zhihu.com/question/26387327/answer/32611575
 
@@ -731,7 +737,7 @@ def response():
 ## 6. Session
 **问：什么是session**
 
-**答：**由于HTTP协议是无状态的协议，所以服务端需要记录用户的状态时，就需要用某种机制来识具体的用户，这个机制就是Session.
+**答**：由于HTTP协议是无状态的协议，所以服务端需要记录用户的状态时，就需要用某种机制来识具体的用户，这个机制就是Session.
 
 **session和cookies的区别：**
 1，session 在服务器端，cookie 在客户端（浏览器）
@@ -740,7 +746,7 @@ def response():
 
 **问：那么如何在flask中使用session呢？**
 
-**答：**只要`from flask import session` 就可以使用 session 
+**答**：只要`from flask import session` 就可以使用 session 
 
 当请求过来的时候，flask会把请求里的cookies生成session，然后在视图里就可以使用生成的session，对session进行更改，最后返回给response，并把session写入cookies里。
 
